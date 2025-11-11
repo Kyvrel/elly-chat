@@ -54,7 +54,7 @@ export default function SidebarHistory() {
             <SidebarMenu>
               {item.items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={item.isActive}>
+                  <SidebarMenuButton asChild isActive={true}>
                     <a href={item.url}>{item.title}</a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
