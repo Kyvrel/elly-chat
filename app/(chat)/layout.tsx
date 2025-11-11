@@ -12,9 +12,9 @@ export default async function Layout({
   children: React.ReactNode;
 }>) {
   const cookieStorage = await cookies();
-  const isCollapse = cookieStorage.get("sidebar_state")?.value == "true";
+  const isOpen = cookieStorage.get("sidebar_state")?.value !== "false";
   return (
-    <SidebarProvider defaultOpen={isCollapse}>
+    <SidebarProvider defaultOpen={isOpen}>
       <AppSidebar />
       <main className="flex-1 overflow-auto">
         <SidebarInset> {children}</SidebarInset>
