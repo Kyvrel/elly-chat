@@ -1,49 +1,20 @@
 'use client'
 import * as React from 'react'
-import { User2, ChevronUp, Plus, PlusIcon } from 'lucide-react'
+import { ChevronUp } from 'lucide-react'
 
-import { SearchForm } from '@/components/search-form'
-import { VersionSwitcher } from '@/components/version-switcher'
 import Image from 'next/image'
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail,
-  SidebarFooter,
 } from '@/components/ui/sidebar'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
-import Link from 'next/link'
-import { Button } from './ui/button'
+
 import { authClient } from '@/lib/auth-client'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
@@ -60,7 +31,20 @@ export default function SidebarUserNav() {
     }
   }
 
-  const { data } = authClient.useSession()
+  const { data, isPending } = authClient.useSession()
+
+  if (isPending) {
+    return (
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton>
+            <span className="truncate">Loading...</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    )
+  }
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>

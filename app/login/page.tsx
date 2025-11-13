@@ -15,13 +15,7 @@ import { authClient } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import {
-  AlertCircleIcon,
-  CheckCircle2Icon,
-  Loader2,
-  PopcornIcon,
-} from 'lucide-react'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 export default function LoginPage() {

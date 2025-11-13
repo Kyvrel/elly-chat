@@ -1,46 +1,21 @@
 import * as React from 'react'
-import { User2, ChevronUp, Plus, PlusIcon } from 'lucide-react'
+import { PlusIcon } from 'lucide-react'
 
-import { SearchForm } from '@/components/search-form'
-import { VersionSwitcher } from '@/components/version-switcher'
-import Image from 'next/image'
 import {
   Sidebar,
   SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarRail,
   SidebarFooter,
 } from '@/components/ui/sidebar'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+
 import Link from 'next/link'
 import { Button } from './ui/button'
 import SidebarHistory from './sidebar-history'

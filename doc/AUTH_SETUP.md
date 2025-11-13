@@ -25,15 +25,7 @@ GOOGLE_CLIENT_SECRET=your_google_client_secret
 
 ## 数据库设置
 
-### 方式 1: 使用自动化脚本 (推荐)
-
-```bash
-# 确保已设置 DATABASE_URL 环境变量
-source .env
-./database/setup.sh
-```
-
-### 方式 2: 手动运行 SQL
+### 手动运行 SQL
 
 ```bash
 psql "$DATABASE_URL" -f database/schema.sql

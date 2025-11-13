@@ -16,10 +16,7 @@ GOOGLE_CLIENT_SECRET=
 ## 2️⃣ 初始化数据库
 
 ```bash
-# 方式 1: 使用脚本
-source .env && ./database/setup.sh
-
-# 方式 2: 手动执行
+# 方式 : 手动执行
 psql "$DATABASE_URL" -f database/schema.sql
 ```
 
@@ -91,7 +88,6 @@ elly-chat/
 │   └── db.ts                         # Drizzle 数据库
 ├── database/
 │   ├── schema.sql                    # 数据库 Schema
-│   └── setup.sh                      # 初始化脚本
 ├── auth-schema.ts                    # Drizzle Schema 定义
 └── proxy.ts                          # Next.js 16 路由保护
 ```
