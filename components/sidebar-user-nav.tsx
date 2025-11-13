@@ -1,9 +1,10 @@
-import * as React from "react";
-import { User2, ChevronUp, Plus, PlusIcon } from "lucide-react";
+'use client'
+import * as React from 'react'
+import { User2, ChevronUp, Plus, PlusIcon } from 'lucide-react'
 
-import { SearchForm } from "@/components/search-form";
-import { VersionSwitcher } from "@/components/version-switcher";
-import Image from "next/image";
+import { SearchForm } from '@/components/search-form'
+import { VersionSwitcher } from '@/components/version-switcher'
+import Image from 'next/image'
 import {
   Sidebar,
   SidebarContent,
@@ -16,7 +17,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
   SidebarFooter,
-} from "@/components/ui/sidebar";
+} from '@/components/ui/sidebar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,21 +31,36 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from '@/components/ui/tooltip'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import Link from "next/link";
-import { Button } from "./ui/button";
+} from '@/components/ui/popover'
+import Link from 'next/link'
+import { Button } from './ui/button'
+import { authClient } from '@/lib/auth-client'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 export default function SidebarUserNav() {
+  const router = useRouter()
+
+  const handleSignout = async () => {
+    const { error } = await authClient.signOut()
+    if (error) {
+      toast.error(error.message)
+    } else {
+      router.push('/login')
+    }
+  }
+
+  const { data } = authClient.useSession()
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -58,7 +74,7 @@ export default function SidebarUserNav() {
                 width="30"
                 height="30"
               />
-              <span className="truncate">Chase</span>
+              <span className="truncate">{data?.user.name}</span>
               <ChevronUp className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
@@ -72,12 +88,12 @@ export default function SidebarUserNav() {
             <DropdownMenuItem>
               <span>Billing</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleSignout}>
               <span>Sign out</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  );
+  )
 }
