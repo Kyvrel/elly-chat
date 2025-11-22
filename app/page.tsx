@@ -1,65 +1,97 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState } from 'react'
+
+/**
+ * Simple Chatbot - 从零开始学习版本
+ *
+ * 学习路径：
+ * Step 1: 创建基础页面容器
+ * Step 2: 添加顶部标题
+ * Step 3: 添加第一条 AI 消息
+ * Step 4: 添加用户消息
+ * Step 5: 用变量控制消息角色
+ * Step 6: 添加条件样式
+ * Step 7: 使用 map 渲染多条消息
+ */
+
+export default function ChatPage() {
+  const messages = [
+    { id: 1, role: 'assistant', content: 'Hi there, what can I do for you' },
+    { id: 2, role: 'user', content: 'Hello, whats the weather tody' },
+    {
+      id: 3,
+      role: 'assistant',
+      content: 'Very well, the temperature is 16C tody',
+    },
+    { id: 4, role: 'user', content: 'I want to do some exercise' },
+    {
+      id: 5,
+      role: 'assistant',
+      content: 'Thats great, exercise help us keep fit',
+    },
+  ]
+  /* TODO(human): 使用 map 渲染多条消息
+
+     需求：
+     1. 创建消息数组：
+        - 定义一个 messages 数组，包含 3-4 条消息
+        - 每条消息是一个对象：{ id: string, role: 'user' | 'assistant', content: string }
+        - 例如：
+          const messages = [
+            { id: '1', role: 'assistant', content: 'Hi! How can I help?' },
+            { id: '2', role: 'user', content: 'Hello!' },
+            ...
+          ]
+
+     2. 使用 map 遍历：
+        - 使用 messages.map((message) => { ... })
+        - 在每个消息中：
+          · 根据 message.role 判断 isUser
+          · 渲染之前写好的消息结构
+          · 使用 message.content 作为内容
+          · 重要：添加 key={message.id} 到最外层 div
+
+     3. 为什么需要 key：
+        - React 使用 key 来追踪列表中的每个元素
+        - 没有 key 会有警告，而且可能导致渲染问题
+        - key 必须是唯一的（通常用 id）
+  */
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white border-b border-gray-200 px-4 py-3 ">
+        <h1 className="text-lg font-semibold">Simple Chat</h1>
+      </header>
+
+      <div className="w-full max-w-3xl mx-auto mt-10">
+        {messages.map(msg => {
+          const isUser = msg.role === 'user'
+          return (
+            <div
+              key={msg.id}
+              className={`flex p-4 gap-2 ${
+                isUser ? 'justify-end' : 'justify-start'
+              }`}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+              {!isUser && (
+                <div className="size-8 flex justify-center items-center rounded-full font-semibold bg-purple-600 text-white text-sm">
+                  AI
+                </div>
+              )}
+              <div
+                className={`rounded-lg px-4 py-2 text-sm  ${
+                  isUser
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-900 flex-1'
+                }`}
+              >
+                {msg.content}
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </div>
-  );
+  )
 }
