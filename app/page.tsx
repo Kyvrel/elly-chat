@@ -2,19 +2,6 @@
 
 import { useState } from 'react'
 
-/**
- * Simple Chatbot - 从零开始学习版本
- *
- * 学习路径：
- * Step 1: 创建基础页面容器
- * Step 2: 添加顶部标题
- * Step 3: 添加第一条 AI 消息
- * Step 4: 添加用户消息
- * Step 5: 用变量控制消息角色
- * Step 6: 添加条件样式
- * Step 7: 使用 map 渲染多条消息
- */
-
 export default function ChatPage() {
   const messages = [
     { id: 1, role: 'assistant', content: 'Hi there, what can I do for you' },
@@ -31,32 +18,44 @@ export default function ChatPage() {
       content: 'Thats great, exercise help us keep fit',
     },
   ]
-  /* TODO(human): 使用 map 渲染多条消息
+
+  /* TODO(human): Add input state and handler
 
      需求：
-     1. 创建消息数组：
-        - 定义一个 messages 数组，包含 3-4 条消息
-        - 每条消息是一个对象：{ id: string, role: 'user' | 'assistant', content: string }
-        - 例如：
-          const messages = [
-            { id: '1', role: 'assistant', content: 'Hi! How can I help?' },
-            { id: '2', role: 'user', content: 'Hello!' },
-            ...
-          ]
+     1. Create state for input value:
+        - const [input, setInput] = useState('')
 
-     2. 使用 map 遍历：
-        - 使用 messages.map((message) => { ... })
-        - 在每个消息中：
-          · 根据 message.role 判断 isUser
-          · 渲染之前写好的消息结构
-          · 使用 message.content 作为内容
-          · 重要：添加 key={message.id} 到最外层 div
+     2. Create submit handler function:
+        - handleSubmit(e) - prevents default form submission
+        - For now, just console.log(input) to test
+        - Clear input after submit: setInput('')
 
-     3. 为什么需要 key：
-        - React 使用 key 来追踪列表中的每个元素
-        - 没有 key 会有警告，而且可能导致渲染问题
-        - key 必须是唯一的（通常用 id）
+     3. Create keyboard handler:
+        - handleKeyDown(e) - detects Enter vs Shift+Enter
+        - Enter alone = submit
+        - Shift+Enter = new line (default textarea behavior)
   */
+  const [input, setInput] = useState('')
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!input.trim()) return
+    // messages.push({
+    //   id: messages[messages.length - 1].id + 1,
+    //   role: 'user',
+    //   content: 'e.target.value',
+    // })
+    console.log('handleSubmit: ', input)
+    setInput('')
+  }
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSubmit(e)
+    }
+  }
+  const handleChange = (e: any) => {
+    setInput(e.target.value)
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -64,6 +63,7 @@ export default function ChatPage() {
         <h1 className="text-lg font-semibold">Simple Chat</h1>
       </header>
 
+      {/* Messages */}
       <div className="w-full max-w-3xl mx-auto mt-10">
         {messages.map(msg => {
           const isUser = msg.role === 'user'
@@ -91,6 +91,53 @@ export default function ChatPage() {
             </div>
           )
         })}
+      </div>
+
+      {/* TODO(human): Add input box UI
+
+          需求：Create a form at the bottom of the page with:
+
+          1. Container:
+             - Fixed at bottom (or just below messages)
+             - White background, top border
+             - Padding, max-width same as messages (max-w-3xl)
+             - Centered
+
+          2. Form layout (flex):
+             - Textarea on the left (takes most space)
+             - Send button on the right
+
+          3. Textarea:
+             - Multiple lines (rows=1 or auto-resize)
+             - Placeholder: "Type a message..."
+             - Rounded corners, border, padding
+             - Connect to input state: value={input} onChange={e => setInput(e.target.value)}
+             - Connect keyboard handler: onKeyDown={handleKeyDown}
+
+          4. Send button:
+             - Icon or text "Send"
+             - Disabled when input is empty
+             - onClick={handleSubmit}
+      */}
+      <div className="fixed bottom-0  left-0 right-0  border-t bg-white p-4 ">
+        <form className="mx-auto flex max-w-3xl gap-2" onSubmit={handleSubmit}>
+          <textarea
+            name="input"
+            autoFocus
+            rows={1}
+            value={input}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            className="flex-1 resize-none p-2 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none"
+            placeholder="Type a message..."
+          ></textarea>
+          <button
+            disabled={!input.trim()}
+            className="disabled:bg-gray-200 disabled:text-white px-2 py-1 text-sm rounded-lg bg-black text-white "
+          >
+            Send
+          </button>
+        </form>
       </div>
     </div>
   )
