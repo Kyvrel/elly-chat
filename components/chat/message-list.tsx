@@ -9,7 +9,7 @@ type MessageListProps = {
 }
 
 export function MessageList({ messages, status }: MessageListProps) {
-  const messageEndRef = useRef(null)
+  const messageEndRef = useRef<HTMLDivElement | null>(null)
 
   // 只在消息数量变化时滚动（避免流式输出时的跳动）
   useEffect(() => {
