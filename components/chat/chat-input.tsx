@@ -13,7 +13,7 @@ export function ChatInput({
   handleSubmit,
 }: ChatInputProps) {
   return (
-    <div className="fixed bottom-0 left-0 right-0 border-t bg-white p-4">
+    <div className="fixed bottom-0 left-72 right-0 border-t bg-white p-4">
       <form className="mx-auto flex max-w-4xl gap-2" onSubmit={handleSubmit}>
         <textarea
           name="input"
