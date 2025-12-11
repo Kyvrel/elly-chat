@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Block vs Inline Width Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-8 bg-gray-50">
+  <div class="max-w-2xl mx-auto space-y-8">
+    <h1 class="text-2xl font-bold">Block vs Inline Element Width</h1>
+
+    <!-- Case 1: Block element (div) -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h2 class="text-lg font-semibold mb-2">Block Element (div)</h2>
+      <div class="border-2 border-blue-300 p-2">
+        <div class="bg-yellow-200 border-2 border-red-500">
+          Short text
+        </div>
+      </div>
+      <p class="text-xs text-gray-600 mt-2">
+        ❌ "宽度由内容撑开" is WRONG! <br>
+        ✅ Block element takes 100% width of parent, regardless of content length.
+      </p>
+    </div>
+
+    <!-- Case 2: Inline element (span) -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h2 class="text-lg font-semibold mb-2">Inline Element (span)</h2>
+      <div class="border-2 border-blue-300 p-2">
+        <span class="bg-yellow-200 border-2 border-red-500">
+          Short text
+        </span>
+      </div>
+      <p class="text-xs text-gray-600 mt-2">
+        ✅ Inline element width = content width (by content)
+      </p>
+    </div>
+
+    <!-- Case 3: Inline-block -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h2 class="text-lg font-semibold mb-2">Inline-block Element</h2>
+      <div class="border-2 border-blue-300 p-2">
+        <div class="inline-block bg-yellow-200 border-2 border-red-500">
+          Short text
+        </div>
+      </div>
+      <p class="text-xs text-gray-600 mt-2">
+        ✅ Inline-block width = content width (by content)
+      </p>
+    </div>
+
+    <!-- Case 4: Block with explicit width -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h2 class="text-lg font-semibold mb-2">Block with Explicit Width</h2>
+      <div class="border-2 border-blue-300 p-2">
+        <div class="w-32 bg-yellow-200 border-2 border-red-500">
+          Short text
+        </div>
+      </div>
+      <p class="text-xs text-gray-600 mt-2">
+        ✅ Block with explicit width (w-32 = 8rem)
+      </p>
+    </div>
+
+    <!-- Case 5: In Flexbox (our previous example) -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h2 class="text-lg font-semibold mb-2">Block Element in Flexbox</h2>
+      <div class="flex gap-3 border-2 border-blue-300 p-2">
+        <div class="w-4 h-4 bg-blue-500 shrink-0"></div>
+
+        <!-- Block element in flex container -->
+        <div class="flex-1 bg-yellow-200 border-2 border-red-500">
+          <p class="truncate">Very long text that should be truncated</p>
+        </div>
+
+        <div class="w-4 h-4 bg-green-500 shrink-0"></div>
+      </div>
+      <p class="text-xs text-gray-600 mt-2">
+        ⚠️ In Flexbox, block element behavior changes! <br>
+        Width is controlled by flex properties (flex-1) and min-width.
+      </p>
+    </div>
+
+    <!-- Explanation -->
+    <div class="bg-blue-50 p-4 rounded-lg">
+      <h3 class="font-semibold mb-2">Summary</h3>
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b">
+            <th class="text-left py-2">Element Type</th>
+            <th class="text-left py-2">Default Width</th>
+            <th class="text-left py-2">由内容撑开?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b">
+            <td class="py-2"><code class="bg-white px-1">block</code> (div, p, h1)</td>
+            <td>100% of parent</td>
+            <td class="text-red-600 font-bold">❌ NO</td>
+          </tr>
+          <tr class="border-b">
+            <td class="py-2"><code class="bg-white px-1">inline</code> (span, a)</td>
+            <td>Content width</td>
+            <td class="text-green-600 font-bold">✅ YES</td>
+          </tr>
+          <tr class="border-b">
+            <td class="py-2"><code class="bg-white px-1">inline-block</code></td>
+            <td>Content width</td>
+            <td class="text-green-600 font-bold">✅ YES</td>
+          </tr>
+          <tr>
+            <td class="py-2">In Flexbox/Grid</td>
+            <td>Layout algorithm</td>
+            <td class="text-yellow-600 font-bold">⚠️ DEPENDS</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Technical Details -->
+    <div class="bg-purple-50 p-4 rounded-lg">
+      <h3 class="font-semibold mb-2">Technical Details</h3>
+      <div class="text-sm space-y-2">
+        <p><strong>Standard document flow (normal flow):</strong></p>
+        <ul class="list-disc list-inside space-y-1">
+          <li>Block elements: <code class="bg-white px-1">width: auto</code> = 100% of parent width</li>
+          <li>Inline elements: <code class="bg-white px-1">width: auto</code> = content width</li>
+        </ul>
+
+        <p class="mt-3"><strong>Why the confusion?</strong></p>
+        <ul class="list-disc list-inside space-y-1">
+          <li>In Flexbox/Grid, <code class="bg-white px-1">width: auto</code> behavior changes</li>
+          <li>Floated elements also behave differently (shrink-to-fit)</li>
+          <li>Absolutely positioned elements shrink to content</li>
+        </ul>
+
+        <p class="mt-3"><strong>Key takeaway:</strong></p>
+        <p class="bg-yellow-100 p-2 rounded">
+          Don't say "div width is determined by content" - that's wrong in standard flow!<br>
+          Say "div takes 100% parent width by default" ✅
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

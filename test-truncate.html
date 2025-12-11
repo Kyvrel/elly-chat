@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flexbox min-width and truncate demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-8 bg-gray-50">
+  <div class="max-w-2xl mx-auto space-y-8">
+    <h1 class="text-2xl font-bold">Flexbox min-width vs truncate</h1>
+
+    <!-- Case 1: Without min-w-0 (broken) -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h2 class="text-lg font-semibold mb-2">❌ Without min-w-0 (broken)</h2>
+      <div class="flex items-center gap-3 border-2 border-red-300 p-3">
+        <div class="w-4 h-4 bg-blue-500 shrink-0"></div>
+
+        <!-- No min-w-0, truncate won't work -->
+        <div class="flex-1 bg-yellow-100">
+          <p class="text-sm truncate">
+            This is a very long text that should be truncated but it won't work because min-width is auto
+          </p>
+        </div>
+
+        <div class="w-4 h-4 bg-green-500 shrink-0"></div>
+      </div>
+      <p class="text-xs text-gray-600 mt-2">
+        👆 Text overflows the container! The yellow div expands beyond the container width.
+      </p>
+    </div>
+
+    <!-- Case 2: With min-w-0 (works) -->
+    <div class="bg-white p-4 rounded-lg shadow">
+      <h2 class="text-lg font-semibold mb-2">✅ With min-w-0 (works)</h2>
+      <div class="flex items-center gap-3 border-2 border-green-300 p-3">
+        <div class="w-4 h-4 bg-blue-500 shrink-0"></div>
+
+        <!-- With min-w-0, truncate works -->
+        <div class="flex-1 min-w-0 bg-yellow-100">
+          <p class="text-sm truncate">
+            This is a very long text that should be truncated but it won't work because min-width is auto
+          </p>
+        </div>
+
+        <div class="w-4 h-4 bg-green-500 shrink-0"></div>
+      </div>
+      <p class="text-xs text-gray-600 mt-2">
+        👆 Text is properly truncated with ellipsis! The yellow div respects container width.
+      </p>
+    </div>
+
+    <!-- Explanation -->
+    <div class="bg-blue-50 p-4 rounded-lg">
+      <h3 class="font-semibold mb-2">What's happening?</h3>
+      <ul class="text-sm space-y-2 list-disc list-inside">
+        <li><strong>Case 1:</strong> Default <code class="bg-white px-1">min-width: auto</code> means "my minimum width = content width"</li>
+        <li>The yellow div expands to fit the full text width</li>
+        <li>Since the container never constrains the text, <code class="bg-white px-1">truncate</code> never triggers</li>
+        <li><strong>Case 2:</strong> <code class="bg-white px-1">min-w-0</code> allows the div to shrink smaller than content</li>
+        <li>The text overflows the div boundary, triggering <code class="bg-white px-1">text-overflow: ellipsis</code></li>
+      </ul>
+    </div>
+
+    <!-- Technical Details -->
+    <div class="bg-purple-50 p-4 rounded-lg">
+      <h3 class="font-semibold mb-2">Technical breakdown</h3>
+      <div class="text-sm space-y-2">
+        <p><strong>truncate</strong> in Tailwind equals:</p>
+        <pre class="bg-white p-2 rounded text-xs overflow-x-auto">overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;</pre>
+
+        <p class="mt-3"><strong>For ellipsis to work, you need:</strong></p>
+        <ol class="list-decimal list-inside space-y-1">
+          <li>A width constraint (explicit or from parent)</li>
+          <li>Content that overflows that constraint</li>
+          <li><code class="bg-white px-1">overflow: hidden</code></li>
+        </ol>
+
+        <p class="mt-3"><strong>Flexbox default behavior prevents this:</strong></p>
+        <p><code class="bg-white px-1">min-width: auto</code> → element can't shrink below content width → no overflow → no ellipsis</p>
+
+        <p class="mt-3"><strong>Solution:</strong></p>
+        <p><code class="bg-white px-1">min-w-0</code> → element can shrink to 0 → overflow happens → ellipsis works</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
