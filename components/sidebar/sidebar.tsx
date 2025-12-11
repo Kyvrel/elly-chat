@@ -14,13 +14,14 @@ export function Sidebar() {
     title: `${idx}: How to use React hooks?`,
     updatedAt: new Date('2024-01-15'),
   }))
-  console.log('MOCK_CHATS:', MOCK_CHATS)
   return (
-    <div className="flex flex-col bg-white w-72 border-r h-full">
-      <div className="border-b px-4 py-3 bg-white">
+    <div className="flex flex-col bg-sidebar border-sidebar-border w-72 border-r h-full">
+      <div className="border-b border-sidebar-border px-4 py-3">
         <div className="flex items-center gap-2">
           <Image src="/elephant.png" alt="Elly" width={24} height={24} />
-          <h1 className="text-lg font-semibold">Elly Chat</h1>
+          <h1 className="text-lg font-semibold text-sidebar-foreground">
+            Elly Chat
+          </h1>
         </div>
       </div>
 
@@ -41,8 +42,8 @@ export function Sidebar() {
             <div
               className={`w-full rounded-lg p-4 text-left  group cursor-pointer ${
                 selected === chat.id
-                  ? 'bg-blue-50 border-l-4 border-blue-500'
-                  : 'hover:bg-gray-100'
+                  ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                  : 'hover:bg-muted'
               }`}
               key={chat.id}
               onClick={() => {
@@ -51,10 +52,10 @@ export function Sidebar() {
               }}
             >
               <div className="flex items-start gap-3">
-                <MessageSquare className="w-4 h-4 text-gray-500 mt-0.5 shrink-0" />
+                <MessageSquare className="w-4 h-4 text-sidebar-foreground/60 mt-0.5 shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{chat.title}</p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-sidebar-foreground/60">
                     {chat.updatedAt.toLocaleDateString()}
                   </p>
                 </div>
@@ -65,7 +66,7 @@ export function Sidebar() {
                     console.log('delete chat', chat.id)
                   }}
                 >
-                  <Trash2 className="w-4 h-4 text-red-500" />
+                  <Trash2 className="w-4 h-4 text-destructive" />
                 </button>
               </div>
             </div>
