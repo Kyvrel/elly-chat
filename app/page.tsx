@@ -6,6 +6,7 @@ import { ChatHeader } from '@/components/chat/chat-header'
 import { Sidebar } from '@/components/sidebar/sidebar'
 import { MessageList } from '@/components/chat/message-list'
 import { ChatInput } from '@/components/chat/chat-input'
+import { mutate } from 'swr'
 
 export default function ChatPage() {
   const { messages, sendMessage, error, regenerate, status } = useChat()
@@ -16,6 +17,7 @@ export default function ChatPage() {
     sendMessage({ text: input })
     setInput('')
   }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
