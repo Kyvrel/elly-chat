@@ -13,13 +13,16 @@ export function Message({ message: { role, parts } }: MessageProps) {
       className={`flex p-4 gap-2 ${isUser ? 'justify-end' : 'justify-start'}`}
     >
       {!isUser && (
-        <div className="size-8 flex justify-center items-center rounded-full font-semibold bg-purple-600 text-white text-base">
+        <div className="size-8 flex justify-center items-center rounded-full font-semibold bg-primary text-primary-foreground text-sm shrink-0">
           AI
         </div>
       )}
+
       <div
         className={`rounded-lg px-4 py-2 text-base ${
-          isUser ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900 flex-1'
+          isUser
+            ? 'bg-primary text-primary-foreground'
+            : 'bg-muted text-foreground flex-1'
         }`}
       >
         {parts.map((part, i) => {
@@ -27,6 +30,7 @@ export function Message({ message: { role, parts } }: MessageProps) {
             if (isUser) {
               return <span key={i}>{part.text}</span>
             }
+
             return (
               <div key={i} className="prose prose-base max-w-2xl">
                 <ReactMarkdown
@@ -46,7 +50,7 @@ export function Message({ message: { role, parts } }: MessageProps) {
                         </SyntaxHighlighter>
                       ) : (
                         <code
-                          className={`${className} text-sm bg-gray-200 px-1 rounded`}
+                          className={`${className} text-sm bg-accent text-accent-foreground px-1.5 py-0.5 rounded font-mono`}
                         >
                           {children}
                         </code>

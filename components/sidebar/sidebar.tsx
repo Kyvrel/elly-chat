@@ -40,7 +40,7 @@ export function Sidebar() {
         {MOCK_CHATS.map(chat => {
           return (
             <div
-              className={`w-full rounded-lg p-4 text-left  group cursor-pointer ${
+              className={`w-full rounded-xl p-3 mb-1 text-left transition-colors group cursor-pointer ${
                 selected === chat.id
                   ? 'bg-sidebar-accent text-sidebar-accent-foreground'
                   : 'hover:bg-muted'

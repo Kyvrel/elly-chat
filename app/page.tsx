@@ -6,10 +6,9 @@ import { ChatHeader } from '@/components/chat/chat-header'
 import { Sidebar } from '@/components/sidebar/sidebar'
 import { MessageList } from '@/components/chat/message-list'
 import { ChatInput } from '@/components/chat/chat-input'
-import { convertToModelMessages } from 'ai'
 
 export default function ChatPage() {
-  const { messages, sendMessage, status } = useChat()
+  const { messages, sendMessage, error, regenerate, status } = useChat()
   const [input, setInput] = useState('')
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -31,11 +30,11 @@ export default function ChatPage() {
   }, [messages])
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-background">
       <Sidebar />
       <div className="flex-1 flex flex-col h-full">
         <ChatHeader />
-        <MessageList messages={messages} status={status} />
+        <MessageList messages={messages} status={status} regenerate={regenerate} error={error} />
         <ChatInput
           input={input}
           status={status}
