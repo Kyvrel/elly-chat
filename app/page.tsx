@@ -34,7 +34,12 @@ export default function ChatPage() {
       <Sidebar />
       <div className="flex-1 flex flex-col h-full">
         <ChatHeader />
-        <MessageList messages={messages} status={status} regenerate={regenerate} error={error} />
+        <MessageList
+          messages={messages}
+          status={status}
+          regenerate={regenerate}
+          error={error}
+        />
         <ChatInput
           input={input}
           status={status}

@@ -14,7 +14,7 @@ export function ChatInput({
 }: ChatInputProps) {
   return (
     <div className="fixed bottom-0 left-72 right-0 border-t bg-card p-4">
-      <form className="mx-auto flex max-w-4xl gap-2" onSubmit={handleSubmit}>
+      <form className="mx-auto flex max-w-5xl gap-2" onSubmit={handleSubmit}>
         <textarea
           name="input"
           autoFocus

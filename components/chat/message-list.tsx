@@ -26,7 +26,7 @@ export function MessageList({
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages.length])
   return (
-    <div className="w-full max-w-5xl mx-auto mt-10 pb-32">
+    <div className="overflow-y-auto w-full max-w-5xl mx-auto mt-10 pb-32">
       {messages.map(message => {
         return <Message key={message.id} message={message} />
       })}
@@ -37,7 +37,7 @@ export function MessageList({
             <AlertCircleIcon />
             <AlertTitle>An error occurred.</AlertTitle>
             <AlertDescription>
-              <p className='mb-2'>{error.message}</p>
+              <p className="mb-2">{error.message}</p>
               <Button variant="destructive" onClick={() => regenerate()}>
                 Retry
               </Button>
